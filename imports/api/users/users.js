@@ -15,9 +15,7 @@ Users.schema = new SimpleSchema({
     conn: { type: String, unique: true },
     online: { type: Boolean, defaultValue: true },
     role: { type: String, defaultValue: 'audience', allowedValues: ['audience', 'judge', 'player', 'admin'] },
-    scores: { type: [Object], optional: true },
-    'scores.$.work': { type: String, regEx: SimpleSchema.RegEx.Id },
-    'scores.$.score': { type: Number, regEx: SimpleSchema.RegEx.Id, min: 0, max: 100, decimal: true },
+    scores: { type: [String], optional: true }
 });
 
 Users.attachSchema(Users.schema);
