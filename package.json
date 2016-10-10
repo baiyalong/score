@@ -2,31 +2,15 @@
   "name": "score",
   "private": true,
   "scripts": {
-    "start": "meteor run",
-    "lint": "eslint .",
-    "pretest": "npm run lint --silent"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "allowImportExportEverywhere": true
-    },
-    "plugins": [
-      "meteor"
-    ],
-    "extends": [
-      "airbnb",
-      "plugin:meteor/recommended"
-    ],
-    "settings": {
-      "import/resolver": "meteor"
-    },
-    "rules": {}
+    "start": "meteor run"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "classnames": "^2.2.5",
     "material-ui": "^0.16.0",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.2",
+    "react-addons-pure-render-mixin": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-tap-event-plugin": "^1.0.0"
   },
