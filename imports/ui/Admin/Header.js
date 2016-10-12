@@ -1,29 +1,43 @@
 import React, {Component, PropTypes} from 'react';
+import { browserHistory } from 'react-router';
+import { createContainer } from 'meteor/react-meteor-data';
+import async from 'async';
 import IconButton from 'material-ui/IconButton';
 import Power from 'material-ui/svg-icons/action/power-settings-new';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {indigo500} from 'material-ui/styles/colors';
+import { Session } from 'meteor/session';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
-class HeaderView extends Component {
+
+
+class Header extends Component {
   constructor() {
     super()
-    this.state = { confirm: false };
+    this.state = { open: false };
   }
-  logoutConfirm() {
-    this.setState({ confirm: true })
+  openDialog() {
+    this.setState({ open: true })
   }
-  logout(b) {
-    this.setState({ confirm: false })
-    if (b) this.props.logoutAndRedirect()
+  closeDialog(b) {
+    this.setState({ open: false })
+    if (b) this.props.logout()
   }
   render() {
-    const confirm = {
-      open: this.state.confirm,
-      title: '注销',
-      content: '确认要注销吗？',
-      callback: (b) => this.logout(b)
-    }
-
+    const actions = [
+      <FlatButton
+        label="取消"
+        primary={true}
+        onTouchTap={this.closeDialog.bind(this) }
+        />,
+      <FlatButton
+        label="确定"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={() => this.closeDialog(true) }
+        />,
+    ];
     return (
       <div>
         <Toolbar style={{ backgroundColor: indigo500 }}>
@@ -31,29 +45,33 @@ class HeaderView extends Component {
           <ToolbarGroup >
             <ToolbarTitle text={this.props.username} style={{ color: 'white' }} />
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
-              <IconButton tooltip='注销' onClick={ () => this.logoutConfirm() } >
+              <IconButton tooltip='注销' onClick={ () => this.openDialog() } >
                 <Power color={'white' } />
               </IconButton>
             </div>
           </ToolbarGroup>
         </Toolbar>
+        <Dialog
+          title="注销"
+          actions={actions}
+          open={this.state.open}
+          onRequestClose={this.closeDialog.bind(this) }
+          >
+          <div style={{ textAlign: 'center' }}>确认要注销吗？</div>
+        </Dialog>
       </div>
     )
   }
 }
 
-HeaderView.propTypes = {
-  title: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-}
 
-HeaderView.defaultProps = {
-  title: '管理平台',
-  username: '用户名',
-}
-
-
-export default HeaderView;
-
+export default createContainer(({ params }) => {
+  return {
+    title: '众创',
+    subtitle: Session.get('subtitle') || '',
+    username: Meteor.user() && Meteor.user().username,
+    logout: () => Meteor.logout(err => err ? Session.set('error', { message: err.message, timestamp: Date() }) : browserHistory.push('login'))
+  };
+}, Header);
 
 

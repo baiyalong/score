@@ -1,5 +1,9 @@
 
 import React, {Component, PropTypes} from 'react';
+import { browserHistory } from 'react-router';
+import { createContainer } from 'meteor/react-meteor-data';
+import async from 'async';
+import { Session } from 'meteor/session';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -26,10 +30,6 @@ const style = {
 
 class Login extends Component {
 
-  // // componentWillMount() {
-  //   this.props.checkAuth(this.props.route.path)
-  // }
-
   login() {
     let username = this.refs.username.input.value;
     let password = this.refs.password.input.value;
@@ -52,24 +52,32 @@ class Login extends Component {
           <br />
           <RaisedButton label="登录"  style={{ width: 256 }} backgroundColor={indigo500} labelColor='white' onClick={this.login.bind(this) } />
         </Paper>
-        <Snackbar
-          action='错误'
-          open={!!this.props.error}
-          message={this.props.error || ''}
-          />
       </div>
     )
   }
 }
 
-Login.propTypes = {
-  title: PropTypes.string.isRequired,
-  login: PropTypes.func.isRequired
-}
-
-Login.defaultProps = {
-  title: '欢迎使用'
-}
 
 
-export default Login;
+
+
+export default createContainer(({ params }) => {
+    return {
+        title: '众创',
+        login: function (username, password) {
+            async.waterfall([
+                callback => {
+                    var error = null;
+                    if (password == '') error = '密码不能为空！'
+                    if (username == '') error = '用户名不能为空！'
+                    callback(error ? new Error(error) : null)
+                },
+                callback => Meteor.loginWithPassword(username, password, err => callback(err)),
+                callback => Meteor.logoutOtherClients(callback)
+            ], err => err ? Session.set('error', { message: err.message, timestamp: Date() }) : browserHistory.push('admin'))
+        }
+    };
+}, Login);
+
+
+

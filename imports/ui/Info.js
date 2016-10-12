@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import { Session } from 'meteor/session';
 import Snackbar from 'material-ui/Snackbar';
 
 
 class Info extends Component {
-
     render() {
         const info = {
             action: this.props.error.level || '错误',
@@ -25,6 +26,15 @@ Info.defaultProps = {
 
 }
 
-export default Info
+
+export default createContainer(({ params }) => {
+    return {
+        error: Session.get('error')
+    };
+}, Info);
+
+
+
+
 
 

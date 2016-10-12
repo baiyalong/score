@@ -3,6 +3,8 @@ import IconButton from 'material-ui/IconButton';
 import Power from 'material-ui/svg-icons/action/power-settings-new';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {indigo500} from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
+
 
 class HeaderView extends Component {
   constructor() {
