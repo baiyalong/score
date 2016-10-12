@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
+import {indigo500} from 'material-ui/styles/colors';
 
 
 const style = {
@@ -23,7 +24,7 @@ const style = {
 }
 
 
-class LoginView extends Component {
+class Login extends Component {
 
   // // componentWillMount() {
   //   this.props.checkAuth(this.props.route.path)
@@ -49,7 +50,7 @@ class LoginView extends Component {
           <br />
           <br />
           <br />
-          <RaisedButton label="登录" primary={true} style={{ width: 256 }} onClick={this.login.bind(this) } />
+          <RaisedButton label="登录"  style={{ width: 256 }} backgroundColor={indigo500} labelColor='white' onClick={this.login.bind(this) } />
         </Paper>
         <Snackbar
           action='错误'
@@ -61,14 +62,14 @@ class LoginView extends Component {
   }
 }
 
-LoginView.propTypes = {
+Login.propTypes = {
   title: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired
 }
 
-LoginView.defaultProps = {
+Login.defaultProps = {
   title: '欢迎使用'
 }
 
 
-export default LoginView;
+export default Login;

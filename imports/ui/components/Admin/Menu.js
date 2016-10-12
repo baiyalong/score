@@ -1,16 +1,14 @@
 import React, {Component, PropTypes} from 'react';
+import { browserHistory } from 'react-router';
 import Paper from 'material-ui/Paper';
 import Menus from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
+import Divider from 'material-ui/Divider';
 import User from 'material-ui/svg-icons/social/group';
 import Idea from 'material-ui/svg-icons/image/wb-sunny';
 import Setting from 'material-ui/svg-icons/action/settings';
-import Divider from 'material-ui/Divider';
-import AQI from 'material-ui/svg-icons/image/blur-on';
-import Warning from 'material-ui/svg-icons/alert/warning';
 import Account from 'material-ui/svg-icons/action/account-box';
-import FontIcon from 'material-ui/FontIcon';
+
 
 const style = {
     paper: {
@@ -23,15 +21,20 @@ const style = {
 
 
 class Menu extends Component {
+    constructor() {
+        super();
+        this.state = {}
+    }
+    nav(path) {
+
+        browserHistory.push(path)
+    }
     render() {
         return (
             <Paper style={style.paper}>
                 <Menus>
-                    <MenuItem primaryText="众创活动" leftIcon={<Idea />} />
-                    <MenuItem primaryText="用户管理" leftIcon={<User />} />
-                    <Divider />
-                    <MenuItem primaryText="空气质量" leftIcon={<AQI />} />
-                    <MenuItem primaryText="预报预警" leftIcon={<Warning />} />
+                    <MenuItem primaryText="众创活动" leftIcon={<Idea />} onClick={() => this.nav('work') }/>
+                    <MenuItem primaryText="用户管理" leftIcon={<User />} onClick={() => this.nav('user') }/>
                     <Divider />
                     <MenuItem primaryText="帐号管理" leftIcon={<Account />} />
                     <MenuItem primaryText="系统设置" leftIcon={<Setting />} />

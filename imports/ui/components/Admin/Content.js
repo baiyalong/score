@@ -1,8 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import SubHeader from '../SubHeader';
-import DataTable from '../DataTable';
-import Alert from '../Alert';
-import Modal from '../Modal';
+import SubHeader from './SubHeader';
+import DataTable from './DataTable';
+import Modal from './Modal';
 
 class Content extends Component {
 
@@ -54,13 +53,11 @@ class Content extends Component {
       <div style={{ height: '100%', }}>
         <SubHeader {...content.header} />
         <DataTable {...content.table} />
-        <Alert error={this.props.error} />
-        <Modal {...content.modal} />
       </div>
     )
   }
 }
-
+// <Modal {...content.modal} />
 
 // Content.propTypes = {
 //   children: React.PropTypes.element.isRequired

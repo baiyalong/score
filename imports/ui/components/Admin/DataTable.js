@@ -55,7 +55,7 @@ class DataTable extends Component {
                         <TableRow>
                             {
                                 this.props.dict.map(e => {
-                                    if (e.show.includes('table'))
+                                    // if (e.show.includes('table'))
                                         return <TableHeaderColumn key={e.code}>{e.name}</TableHeaderColumn>
                                 })
                             }
@@ -78,7 +78,7 @@ class DataTable extends Component {
                                                 var option = el.options.find(o => o.value == value)
                                                 value = option && option.name
                                             }
-                                            if (el.show.includes('table'))
+                                            // if (el.show.includes('table'))
                                                 return <TableRowColumn key={el.code}>{value}</TableRowColumn>
                                         })
                                     }
@@ -111,35 +111,35 @@ DataTable.propTypes = {
 
 DataTable.defaultProps = {
     dict: [
-        // { code: 'col1', name: '第一列' },
-        // { code: 'col2', name: '第二列' },
-        // { code: 'col3', name: '第三列' }
+        { code: 'col1', name: '第一列' },
+        { code: 'col2', name: '第二列' },
+        { code: 'col3', name: '第三列' }
     ],
     data: [
-        // { _id: '1', col1: 1, col2: 2, col3: 3 },
-        // { _id: '2', col1: 2, col2: 2, col3: 3 },
-        // { _id: '3', col1: 3, col2: 2, col3: 3 },
-        // { _id: '4', col1: 4, col2: 2, col3: 3 },
-        // { _id: '5', col1: 5, col2: 2, col3: 3 },
-        // { _id: '6', col1: 6, col2: 2, col3: 3 },
-        // { _id: '7', col1: 7, col2: 2, col3: 3 },
-        // { _id: '8', col1: 8, col2: 2, col3: 3 },
-        // { _id: '9', col1: 9, col2: 2, col3: 3 },
-        // { _id: '10', col1: 9, col2: 2, col3: 3 },
-        // { _id: '91', col1: 9, col2: 2, col3: 3 },
-        // { _id: '92', col1: 9, col2: 2, col3: 3 },
-        // { _id: '93', col1: 9, col2: 2, col3: 3 },
-        // { _id: '94', col1: 9, col2: 2, col3: 3 },
-        // { _id: '95', col1: 9, col2: 2, col3: 3 },
-        // { _id: '96', col1: 9, col2: 2, col3: 3 },
-        // { _id: '97', col1: 9, col2: 2, col3: 3 },
-        // { _id: '98', col1: 9, col2: 2, col3: 3 },
-        // { _id: '99', col1: 9, col2: 2, col3: 3 },
-        // { _id: '900', col1: 9, col2: 2, col3: 3 },
-        // { _id: '911', col1: 9, col2: 2, col3: 3 },
-        // { _id: '922', col1: 9, col2: 2, col3: 3 },
-        // { _id: '933', col1: 9, col2: 2, col3: 3 },
-        // { _id: '94431', col1: 9, col2: 2, col3: 3 },
+        { _id: '1', col1: 1, col2: 2, col3: 3 },
+        { _id: '2', col1: 2, col2: 2, col3: 3 },
+        { _id: '3', col1: 3, col2: 2, col3: 3 },
+        { _id: '4', col1: 4, col2: 2, col3: 3 },
+        { _id: '5', col1: 5, col2: 2, col3: 3 },
+        { _id: '6', col1: 6, col2: 2, col3: 3 },
+        { _id: '7', col1: 7, col2: 2, col3: 3 },
+        { _id: '8', col1: 8, col2: 2, col3: 3 },
+        { _id: '9', col1: 9, col2: 2, col3: 3 },
+        { _id: '10', col1: 9, col2: 2, col3: 3 },
+        { _id: '91', col1: 9, col2: 2, col3: 3 },
+        { _id: '92', col1: 9, col2: 2, col3: 3 },
+        { _id: '93', col1: 9, col2: 2, col3: 3 },
+        { _id: '94', col1: 9, col2: 2, col3: 3 },
+        { _id: '95', col1: 9, col2: 2, col3: 3 },
+        { _id: '96', col1: 9, col2: 2, col3: 3 },
+        { _id: '97', col1: 9, col2: 2, col3: 3 },
+        { _id: '98', col1: 9, col2: 2, col3: 3 },
+        { _id: '99', col1: 9, col2: 2, col3: 3 },
+        { _id: '900', col1: 9, col2: 2, col3: 3 },
+        { _id: '911', col1: 9, col2: 2, col3: 3 },
+        { _id: '922', col1: 9, col2: 2, col3: 3 },
+        { _id: '933', col1: 9, col2: 2, col3: 3 },
+        { _id: '94431', col1: 9, col2: 2, col3: 3 },
     ],
 }
 

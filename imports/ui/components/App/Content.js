@@ -8,9 +8,6 @@ class Content extends Component {
                 <Item />
                 <Item />
                 <Item />
-                <Item />
-                <Item />
-                <Item />
             </div>
         );
     }

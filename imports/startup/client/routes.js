@@ -3,17 +3,17 @@ import React from 'react';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 
 // route components
-import RootContainer from '../../ui/containers/Root.js';
+import RootContainer from '../../ui/layouts/Root.js';
 
-import AppContainer from '../../ui/containers/App.js';
-import AppPage from '../../ui/pages/App.js';
+import AppContainer from '../../ui/layouts/App.js';
+import AppPage from '../../ui/containers/App.js';
 
-import AdminContainer from '../../ui/containers/Admin.js';
-import LoginPage from '../../ui/pages/Login.js';
-import UserPage from '../../ui/pages/User.js';
-import WorkPage from '../../ui/pages/Work.js';
+import AdminContainer from '../../ui/layouts/Admin.js';
+import LoginPage from '../../ui/containers/Login.js';
+import UserPage from '../../ui/containers/User.js';
+import WorkPage from '../../ui/containers/Work.js';
 
-import NotFoundPage from '../../ui/pages/NotFound.js';
+import NotFoundPage from '../../ui/containers/NotFound.js';
 
 
 export const renderRoutes = () => (
@@ -23,9 +23,9 @@ export const renderRoutes = () => (
             <Route path="/" component={AppContainer}>
                 <Route path="/app" component={AppPage} />
             </Route>
+            <Route path="/login" component={LoginPage} />
             <Route path="/admin" component={AdminContainer}>
-                <IndexRedirect to="/user" />
-                <Route path="/login" component={LoginPage} />
+                <IndexRedirect to="/login" />
                 <Route path="/user" component={UserPage} />
                 <Route path="/work" component={WorkPage} />
             </Route>

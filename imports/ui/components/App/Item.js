@@ -9,8 +9,8 @@ class Item extends Component {
         return (
             <Card>
                 <CardTitle
-                    title="前端组件化框架及其应用"
-                    subtitle="白亚龙，白亚龙，白亚龙"
+                    title="众创在线评分系统（二期）"
+                    subtitle="白亚龙，潘鲲，叶珍"
                     actAsExpander={true}
                     showExpandableButton={true}
                     style={{ padding: '8px 16px 0 16px' }}
@@ -23,7 +23,7 @@ class Item extends Component {
                             1/9
                         </div>
                         <div style={{ color: 'red', position: 'absolute', top: '4px', right: 0 }}>
-                            [11 22 33 44 55 66 77] 99.99
+                            [11 22 33 44 55 66 77]99.99
                         </div>
                         <div style={{ color: 'red', position: 'absolute', top: '22px', right: 0 }}>
                             88
