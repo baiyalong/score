@@ -8,10 +8,10 @@ class Admin extends Component {
   render() {
     return (
       <div style={{ height: '100%' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%' }} >
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}>
           <Header />
         </div>
-        <div style={{ height: '100%', paddingTop: '56px' }} >
+        <div style={{ position: 'absolute', top: '56px', bottom: 0, left: 0, width: '100%' }}>
           <Menu />
           {this.props.children}
         </div>

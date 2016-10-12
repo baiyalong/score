@@ -14,7 +14,7 @@ const style = {
     paper: {
         display: 'inline-block',
         float: 'left',
-        margin: '0',
+        margin: 0,
         height: '100%'
     }
 };
@@ -26,7 +26,6 @@ class Menu extends Component {
         this.state = {}
     }
     nav(path) {
-
         browserHistory.push(path)
     }
     render() {
