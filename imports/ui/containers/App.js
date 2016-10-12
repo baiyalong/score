@@ -1,20 +1,20 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 
-class CoreLayoutView extends Component {
+class AppContainer extends Component {
 
   render() {
     return (
-        <div style={{ height: '100%', paddingTop: '56px' }} >
-          {this.props.children}
-        </div>
+      <div style={{ height: '100%' }} >
+        {this.props.children}
+      </div>
     )
   }
 }
 
 
-CoreLayoutView.propTypes = {
+AppContainer.propTypes = {
   children: React.PropTypes.element.isRequired
 }
 
-export default CoreLayoutView
+export default AppContainer

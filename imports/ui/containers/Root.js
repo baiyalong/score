@@ -1,6 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -9,19 +8,19 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 
-class RootLayoutView extends Component {
+class RootContainer extends Component {
 
     render() {
         return (
-            <MuiThemeProvider  style={{ height: '100%' }}>
+            <MuiThemeProvider style={{ height: '100%' }}>
                 {this.props.children}
             </MuiThemeProvider>
         )
     }
 }
 
-RootLayoutView.propTypes = {
-    children: React.PropTypes.element.isRequired
+RootContainer.propTypes = {
+    // children: React.PropTypes.element.isRequired
 }
 
-export default RootLayoutView
+export default RootContainer

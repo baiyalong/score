@@ -37,7 +37,6 @@ class HeaderView extends Component {
             </div>
           </ToolbarGroup>
         </Toolbar>
-        <Confirm {...confirm} />
       </div>
     )
   }

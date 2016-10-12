@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 
 // route components
 import RootContainer from '../../ui/containers/Root.js';
@@ -19,15 +19,17 @@ import NotFoundPage from '../../ui/pages/NotFound.js';
 export const renderRoutes = () => (
     <Router history={browserHistory}>
         <Route path="/" component={RootContainer}>
+            <IndexRedirect to="/app" />
             <Route path="/" component={AppContainer}>
-                <Route path="/" component={AppPage}/>
+                <Route path="/app" component={AppPage} />
             </Route>
             <Route path="/admin" component={AdminContainer}>
-                <Route path="/login" component={LoginPage}/>
-                <Route path="/user" component={UserPage}/>
-                <Route path="/work" component={WorkPage}/>
+                <IndexRedirect to="/user" />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/user" component={UserPage} />
+                <Route path="/work" component={WorkPage} />
             </Route>
-            <Route path="*" component={NotFoundPage}/>
+            <Route path="*" component={NotFoundPage} />
         </Route>
     </Router>
 );

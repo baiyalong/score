@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Header from '../components/Admin/Header'
 import Menu from '../components/Admin/Menu'
 
 
-class CoreLayoutView extends Component {
+class AdminContainer extends Component {
 
   render() {
     return (
@@ -21,8 +21,8 @@ class CoreLayoutView extends Component {
 }
 
 
-CoreLayoutView.propTypes = {
+AdminContainer.propTypes = {
   children: React.PropTypes.element.isRequired
 }
 
-export default CoreLayoutView
+export default AdminContainer

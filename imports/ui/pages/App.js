@@ -1,14 +1,19 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
+import Header from '../components/App/Header';
+import Content from '../components/App/Content';
 
-class NotFound extends Component {
+
+class AppPage extends Component {
     render() {
         return (
-            <div  style={{ height: '100%' }}>
-               <h1>404 Not Found !</h1>
+            <div style={{ height: '100%' }}>
+                <Header />
+                <Content />
             </div>
         )
     }
 }
 
 
-export default NotFound
+
+export default AppPage
