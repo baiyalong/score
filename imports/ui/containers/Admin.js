@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import Header from '../components/Header'
-import Menu from '../components/Menu'
+import Header from '../components/Admin/Header'
+import Menu from '../components/Admin/Menu'
 
 
 class CoreLayoutView extends Component {

@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import IconButton from 'material-ui/IconButton';
 import Power from 'material-ui/svg-icons/action/power-settings-new';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import Confirm from '../Confirm';
 import {indigo500} from 'material-ui/styles/colors';
 
 class HeaderView extends Component {

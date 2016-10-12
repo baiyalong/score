@@ -13,7 +13,7 @@ import LoginPage from '../../ui/pages/Login.js';
 import UserPage from '../../ui/pages/User.js';
 import WorkPage from '../../ui/pages/Work.js';
 
-import NotFoundPage from '../../ui/pages/NotFoundPage.js';
+import NotFoundPage from '../../ui/pages/NotFound.js';
 
 
 export const renderRoutes = () => (
