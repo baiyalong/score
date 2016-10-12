@@ -10,6 +10,7 @@ import { Session } from 'meteor/session';
 
 export default createContainer(({ params }) => {
     return {
+        title: '众创',
         login: function (username, password) {
             async.waterfall([
                 callback => {

@@ -6,8 +6,7 @@ import { Session } from 'meteor/session';
 
 export default createContainer(({ params }) => {
     return {
-        level: Session.get('errorLevel'),
-        error: Session.get('error') ? Session.get('error').message : ''
+        error: Session.get('error')
     };
 }, Info);
 

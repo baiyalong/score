@@ -6,9 +6,9 @@ class Info extends Component {
 
     render() {
         const info = {
-            action: this.props.level,
-            open: !!this.props.error,
-            message: this.props.error
+            action: this.props.error.level || '错误',
+            open: !!this.props.error.message,
+            message: this.props.error.message
         }
         return (
             <Snackbar {...info} />
@@ -18,9 +18,11 @@ class Info extends Component {
 
 
 Info.defaultProps = {
-    level: '错误',
-    open: false,
-    error: '',
+    error: {
+        level: '错误',
+        message: '',
+    }
+
 }
 
 export default Info
