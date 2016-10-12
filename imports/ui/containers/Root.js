@@ -12,7 +12,6 @@ injectTapEventPlugin();
 class RootLayoutView extends Component {
 
     render() {
-        if (!this.props.checkAuth()) return false;
         return (
             <MuiThemeProvider  style={{ height: '100%' }}>
                 {this.props.children}
