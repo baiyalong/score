@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import Content from '../components/Admin/Content';
+import Content from '../../components/Admin/Content';
 
 
 class UserPage extends Component {

@@ -1,6 +1,6 @@
 
 
-const Users = new Mongo.Collection('Users');
+export const Users = new Mongo.Collection('Users');
 
 
 

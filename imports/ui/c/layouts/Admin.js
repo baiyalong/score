@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import Header from '../components/Admin/Header'
+import Header from '../containers/Admin/Header'
 import Menu from '../components/Admin/Menu'
 
 
-class AdminContainer extends Component {
+class Admin extends Component {
 
   render() {
     return (
@@ -21,8 +21,8 @@ class AdminContainer extends Component {
 }
 
 
-AdminContainer.propTypes = {
+Admin.propTypes = {
   children: React.PropTypes.element.isRequired
 }
 
-export default AdminContainer
+export default Admin

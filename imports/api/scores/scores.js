@@ -1,6 +1,6 @@
 
 
-const Scores = new Mongo.Collection('Scores');
+export const Scores = new Mongo.Collection('Scores');
 
 
 

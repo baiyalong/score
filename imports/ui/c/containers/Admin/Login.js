@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { browserHistory } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import async from 'async';
-import Login from '../components/Admin/Login';
+import Login from '../../components/Admin/Login';
 import { Session } from 'meteor/session';
 
 
