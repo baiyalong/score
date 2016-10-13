@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -26,21 +26,21 @@ export default class WorkDialog extends Component {
         super()
         this.state = {};
     }
-    componentDidMount() {
-        console.log(this.props)
-        this.setState(this.props.e)
+    closeDialog(state) {
+        this.props.closeDialog(state)
+        this.state = {};
     }
     render() {
         const actions = [
             <FlatButton
                 label="取消"
                 primary={true}
-                onTouchTap={() => this.props.closeDialog() } />,
+                onTouchTap={() => this.closeDialog()} />,
             <FlatButton
                 label="确定"
                 primary={true}
                 keyboardFocused={true}
-                onTouchTap={() => this.props.closeDialog(this.state) } />,
+                onTouchTap={() => this.closeDialog(this.state)} />,
         ]
         const fields = [
             { name: '主题', code: 'title', type: 'text' },
@@ -57,16 +57,16 @@ export default class WorkDialog extends Component {
         const content = (
             this.props.action == 'remove'
                 ?
-                <div style={{ textAlign: 'center' } }>确认要删除吗？</div>
+                <div style={{ textAlign: 'center' }}>确认要删除吗？</div>
                 :
                 <div>
                     {
                         fields.map(e => {
                             return <Field
                                 {...e}
-                                value={this.state[e.code]}
-                                changeValue={(v) => this.setState({ [e.code]: v }) }
-                                key={e.code}/>
+                                value={(() => this.props.e[e.code])()}
+                                changeValue={(v) => this.setState({ [e.code]: v })}
+                                key={e.code} />
                         })
                     }
                 </div>
@@ -79,7 +79,7 @@ export default class WorkDialog extends Component {
                 actions={actions}
                 open={this.props.open}
                 autoScrollBodyContent={this.props.action != 'remove'}
-                onRequestClose={() => this.props.closeDialog() } >
+                onRequestClose={() => this.closeDialog()} >
                 {content}
             </Dialog>
         )
@@ -88,12 +88,9 @@ export default class WorkDialog extends Component {
 
 
 class Field extends Component {
-    constructor() {
+    constructor(props) {
         super()
-        this.state = {};
-    }
-    componentDidMount() {
-        this.setState({ value: this.props.value })
+        this.state = { value: props.value };
     }
     render() {
         return this.props.type == 'text'
@@ -101,19 +98,19 @@ class Field extends Component {
             <TextField
                 type='text'
                 floatingLabelText={this.props.name}
-                value={this.state.value}
-                onChange={(event, value) => { this.props.changeValue(value) } }
+                value={this.state.value || ''}
+                onChange={(event, value) => { this.setState({ value }); this.props.changeValue(value) } }
                 fullWidth={true}
-                multiLine={this.props.multiLine}/>
+                multiLine={this.props.multiLine} />
             :
             <DatePicker
                 floatingLabelText={this.props.name}
                 value={this.state.value}
-                onChange={(event, value) => { this.props.changeValue(value) } }
+                onChange={(event, value) => { this.setState({ value }); this.props.changeValue(value) } }
                 container="inline" DateTimeFormat={DateTimeFormat}
                 locale="zh-Hans-CN"
                 okLabel="确定"
                 cancelLabel="取消"
-                fullWidth={true}/>
+                fullWidth={true} />
     }
 }
