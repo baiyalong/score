@@ -98,10 +98,10 @@ class Work extends Component {
                         >
                         {
                             this.props.works.map(e => {
-                                return <TableRow key={e._id}>
+                                <TableRow>
                                     <TableRowColumn style={ellipsis}>{e.title}</TableRowColumn>
                                     <TableRowColumn style={ellipsis}>{e.team}</TableRowColumn>
-                                    <TableRowColumn style={ellipsis}>{e.score}</TableRowColumn>
+                                    <TableRowColumn style={ellipsis}>{e.final + e.scores}</TableRowColumn>
                                     <TableRowColumn width='10%'>{e.rank}</TableRowColumn>
                                     <TableRowColumn width='10%'>
                                         <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>} >
@@ -119,10 +119,8 @@ class Work extends Component {
                     <TableFooter
                         >
                         <TableRow>
-                            <TableRowColumn >
-                                合计：{this.props.works.length}，
-                                已评分：{this.props.works.filter(e => e.scores).length}，
-                                未评分：{this.props.works.filter(e => !e.scores).length}
+                            <TableRowColumn colSpan="3" >
+                                合计：5，已评分：2，未评分：3
                             </TableRowColumn>
                         </TableRow>
                     </TableFooter>
@@ -158,12 +156,11 @@ class Work extends Component {
 
 
 
-import Works from '../../api/works/works';
+
 
 export default createContainer(({ params }) => {
-    Meteor.subscribe('works');
     return {
-        works: Works.find().fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
+        works: Meteor.subscribe('works'),
         insert: (w) => {
             console.log(w)
             Meteor.call('work.insert', w, (err, res) => Session.set('Info', { level: err ? '错误' : '信息', message: err ? err.message : '操作成功', timestamp: Date() }))
