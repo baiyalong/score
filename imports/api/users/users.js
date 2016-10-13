@@ -13,8 +13,8 @@ Users.deny({
 Users.schema = new SimpleSchema({
     fp: { type: String },
     conn: { type: String },
-    online: { type: Boolean, defaultValue: true },
-    role: { type: String, defaultValue: 'audience', allowedValues: ['audience', 'judge', 'player', 'admin'] },
+    online: { type: Boolean },
+    role: { type: String, allowedValues: ['audience', 'judge', 'player', 'admin'] },
     scores: { type: [String], optional: true }
 });
 

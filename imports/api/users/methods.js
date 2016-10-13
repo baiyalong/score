@@ -4,9 +4,14 @@ import Users from './users';
 
 Meteor.methods({
     'user.connect'(user) {
-        Users.upsert({ fp: user.fp }, { $set: { fp: user.fp, conn: this.connection.id, online: true } })
         var u = Users.findOne({ fp: user.fp })
-        if (u.scores) u.scores = Meteor.call('score.get', u.scores)
+        if (u) {
+            Users.update({ _id: u._id }, { $set: Object.assign(u, { conn: this.connection.id, online: true, role: u.role || 'audience' }) })
+            if (u.scores) u.scores = Meteor.call('score.get', u.scores)
+        } else {
+            u = { fp: user.fp, conn: this.connection.id, online: true, role: 'audience' }
+            Object.assign(u, { _id: Users.insert(u) })
+        }
         return u;
     },
     'user.disconnect'(user) {
@@ -32,5 +37,9 @@ Meteor.methods({
         //-------------
         console.log('user.score id ', id)
         User.update({ _id: score.user }, { $addToSet: { scores: id } })
+    },
+    'user.remove'(user) {
+        Users.remove({ _id: user._id })
+        if (user.role == 'judge') Meteor.call('score.del', { user: user._id }) && Meteor.call('user.randJudge', 1)
     }
 })

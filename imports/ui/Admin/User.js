@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
+import IconButton from 'material-ui/IconButton/IconButton';
+import Random from 'material-ui/svg-icons/action/autorenew';
 
 
 const ellipsis = {
@@ -17,6 +19,11 @@ class User extends Component {
                         <TableHeaderColumn>FP</TableHeaderColumn>
                         <TableHeaderColumn>角色</TableHeaderColumn>
                         <TableHeaderColumn>状态</TableHeaderColumn>
+                        <TableHeaderColumn width='10%'>
+                            <IconButton tooltip='随机评委' onClick={() => this.openDialog({ action: 'insert', e: {} })} >
+                                <Random />
+                            </IconButton>
+                        </TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody showRowHover={true} displayRowCheckbox={false}>
@@ -26,6 +33,9 @@ class User extends Component {
                                 <TableRowColumn style={ellipsis}>{e.fp}</TableRowColumn>
                                 <TableRowColumn>{e.roleName}</TableRowColumn>
                                 <TableRowColumn style={e.online ? { color: 'Chartreuse' } : { color: 'Gainsboro' }}>{e.onlineName}</TableRowColumn>
+                                <TableHeaderColumn width='10%'>
+ 
+                                </TableHeaderColumn>
                             </TableRow>
                         })
                     }

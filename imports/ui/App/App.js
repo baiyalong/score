@@ -22,7 +22,7 @@ class App extends Component {
 
 export default createContainer(({ params }) => {
   return {
-    connect: (user) => Meteor.call('user.connect', user, callback)
+    connect: (user) => Meteor.call('user.connect', user, (err, res) => callback(err) || console.log(res))
   };
 }, App);
 
