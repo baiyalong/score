@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter} from 'material-ui/Table';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
@@ -37,8 +37,6 @@ class Work extends Component {
         this.props.update(Object.assign({ _id: this.state.e._id }, e))
     }
     detail() { }
-    ascend() { }
-    descend() { }
 
     render() {
         return (
@@ -51,7 +49,7 @@ class Work extends Component {
                             <TableHeaderColumn>得分</TableHeaderColumn>
                             <TableHeaderColumn width='10%'>排名</TableHeaderColumn>
                             <TableHeaderColumn width='10%'>
-                                <IconButton tooltip='添加' onClick={ () => this.openDialog({ action: 'insert', e: {} }) } >
+                                <IconButton tooltip='添加' onClick={() => this.openDialog({ action: 'insert', e: {} })} >
                                     <Insert />
                                 </IconButton>
                             </TableHeaderColumn>
@@ -67,11 +65,11 @@ class Work extends Component {
                                     <TableRowColumn width='10%'>{e.rank}</TableRowColumn>
                                     <TableRowColumn width='10%'>
                                         <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>} >
-                                            <MenuItem primaryText="详情" onClick={ () => this.openDialog({ action: 'detail', e }) } />
-                                            <MenuItem primaryText="修改" onClick={ () => this.openDialog({ action: 'update', e }) } />
-                                            <MenuItem primaryText="删除" onClick={() => this.openDialog({ action: 'remove', e }) }/>
-                                            <MenuItem primaryText="升序" onClick={() => this.ascend(e) }/>
-                                            <MenuItem primaryText="降序" onClick={() => this.descend(e) }/>
+                                            <MenuItem primaryText="详情" onClick={() => this.openDialog({ action: 'detail', e })} />
+                                            <MenuItem primaryText="修改" onClick={() => this.openDialog({ action: 'update', e })} />
+                                            <MenuItem primaryText="删除" onClick={() => this.openDialog({ action: 'remove', e })} />
+                                            <MenuItem primaryText="升序" onClick={() => this.props.ascend(e)} />
+                                            <MenuItem primaryText="降序" onClick={() => this.props.descend(e)} />
                                         </IconMenu>
                                     </TableRowColumn>
                                 </TableRow>
@@ -103,10 +101,12 @@ import Works from '../../api/works/works';
 export default createContainer(({ params }) => {
     Meteor.subscribe('works');
     return {
-        works: Works.find().fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
+        works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
         insert: (w) => Meteor.call('work.insert', w, callback),
         remove: (w) => Meteor.call('work.remove', w, callback),
         update: (w) => Meteor.call('work.update', w, callback),
+        ascend: (w) => Meteor.call('work.ascend', w, callback),
+        descend: (w) => Meteor.call('work.descend', w, callback),
     };
 }, Work);
 

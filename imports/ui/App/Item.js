@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 import LinearProgress from 'material-ui/LinearProgress';
 import Slider from 'material-ui/Slider';
 
 
 class Item extends Component {
+    constructor() {
+        super()
+        this.state = { value: 0 }
+    }
     render() {
         return (
             <Card>
                 <CardTitle
-                    title="众创在线评分系统（二期）"
-                    subtitle="白亚龙，潘鲲，叶珍"
+                    title={this.props.title}
+                    subtitle={this.props.team}
                     actAsExpander={true}
                     showExpandableButton={true}
                     style={{ padding: '8px 16px 0 16px' }}
@@ -20,17 +24,17 @@ class Item extends Component {
                     >
                     <div style={{ position: 'relative' }}>
                         <div style={{ color: 'red', position: 'absolute', top: '-16px', right: 0 }}>
-                            1/9
+                            {this.props.rank}
                         </div>
                         <div style={{ color: 'red', position: 'absolute', top: '4px', right: 0 }}>
-                            [11 22 33 44 55 66 77]99.99
+                            {this.props.score}
                         </div>
                         <div style={{ color: 'red', position: 'absolute', top: '22px', right: 0 }}>
-                            88
+                            {this.state.value}
                         </div>
                     </div>
                     <LinearProgress mode="indeterminate" />
-                    <Slider sliderStyle={{ margin: '8px 0 0 0' }} />
+                    <Slider sliderStyle={{ margin: '8px 0 0 0' }} onChange={(event, value) => { this.setState({ value: Math.round(100 * value) }) } } />
                 </CardText>
                 <CardText
                     expandable={true}
