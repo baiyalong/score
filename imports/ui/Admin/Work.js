@@ -5,6 +5,11 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
 import Insert from 'material-ui/svg-icons/content/add';
+import Remove from 'material-ui/svg-icons/content/remove';
+import Update from 'material-ui/svg-icons/content/create';
+import Detail from 'material-ui/svg-icons/navigation/more-horiz';
+import Ascend from 'material-ui/svg-icons/navigation/arrow-upward';
+import Descend from 'material-ui/svg-icons/navigation/arrow-downward';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import WorkDialog from './WorkDialog';
 
@@ -55,7 +60,7 @@ class Work extends Component {
                             </TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
-                    <TableBody showRowHover={true} displayRowCheckbox={false} >
+                    <TableBody showRowHover={true} displayRowCheckbox={false}>
                         {
                             this.props.works.map(e => {
                                 return <TableRow key={e._id}>
@@ -64,12 +69,22 @@ class Work extends Component {
                                     <TableRowColumn style={ellipsis}>{e.score}</TableRowColumn>
                                     <TableRowColumn width='10%'>{e.rank}</TableRowColumn>
                                     <TableRowColumn width='10%'>
-                                        <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>} >
-                                            <MenuItem primaryText="详情" onClick={() => this.openDialog({ action: 'detail', e })} />
-                                            <MenuItem primaryText="修改" onClick={() => this.openDialog({ action: 'update', e })} />
-                                            <MenuItem primaryText="删除" onClick={() => this.openDialog({ action: 'remove', e })} />
-                                            <MenuItem primaryText="升序" onClick={() => this.props.ascend(e)} />
-                                            <MenuItem primaryText="降序" onClick={() => this.props.descend(e)} />
+                                        <IconMenu iconButtonElement={<IconButton tooltip='操作'><MoreVertIcon /></IconButton>} menuStyle={{ overflow: 'hidden' }} >
+                                            <MenuItem onClick={() => this.openDialog({ action: 'detail', e })}>
+                                                <IconButton tooltip='详情'><Detail /></IconButton>
+                                            </MenuItem>
+                                            <MenuItem onClick={() => this.openDialog({ action: 'remove', e })}>
+                                                <IconButton tooltip='删除'><Remove /></IconButton>
+                                            </MenuItem>
+                                            <MenuItem onClick={() => this.openDialog({ action: 'update', e })}>
+                                                <IconButton tooltip='修改'><Update /></IconButton>
+                                            </MenuItem>
+                                            <MenuItem onClick={() => this.props.ascend(e)}>
+                                                <IconButton tooltip='升序'><Ascend /></IconButton>
+                                            </MenuItem>
+                                            <MenuItem onClick={() => this.props.descend(e)}>
+                                                <IconButton tooltip='降序'><Descend /></IconButton>
+                                            </MenuItem>
                                         </IconMenu>
                                     </TableRowColumn>
                                 </TableRow>

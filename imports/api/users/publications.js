@@ -1,5 +1,5 @@
 
-import Users from '../users';
+import Users from './users';
 
 
 Meteor.publish('users', function () {

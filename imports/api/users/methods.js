@@ -4,8 +4,8 @@ import Users from './users';
 
 Meteor.methods({
     'user.connect'(user) {
-        Users.upsert({ fp: user.fp }, { $set: { fp: user.fp, conn: user.conn, online: true } })
-        var u = User.findOne({ fp: user.fp })
+        Users.upsert({ fp: user.fp }, { $set: { fp: user.fp, conn: this.connection.id, online: true } })
+        var u = Users.findOne({ fp: user.fp })
         if (u.scores) u.scores = Meteor.call('score.get', u.scores)
         return u;
     },

@@ -1,6 +1,6 @@
 
 import Works from './works';
-import '../../api/scores/methods';
+
 
 
 Meteor.methods({
