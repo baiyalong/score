@@ -1,6 +1,6 @@
 
-
-export const Users = new Mongo.Collection('Users');
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+const Users = new Mongo.Collection('Users');
 
 
 
@@ -18,4 +18,6 @@ Users.schema = new SimpleSchema({
     scores: { type: [String], optional: true }
 });
 
-Users.attachSchema(Users.schema);
+// Users.attachSchema(Users.schema);
+
+export default Users;

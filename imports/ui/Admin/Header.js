@@ -59,7 +59,7 @@ class Header extends Component {
           >
           <div style={{ textAlign: 'center' }}>确认要注销吗？</div>
         </Dialog>
-      </div >
+      </div>
     )
   }
 }

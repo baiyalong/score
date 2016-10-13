@@ -1,6 +1,6 @@
 
-
-export const Scores = new Mongo.Collection('Scores');
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+const Scores = new Mongo.Collection('Scores');
 
 
 
@@ -16,4 +16,6 @@ Scores.schema = new SimpleSchema({
     score: { type: Number, min: 0, max: 100, decimal: true},
 });
 
-Scores.attachSchema(Scores.schema);
+// Scores.attachSchema(Scores.schema);
+
+export default Scores;
