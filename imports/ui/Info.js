@@ -7,9 +7,9 @@ import Snackbar from 'material-ui/Snackbar';
 class Info extends Component {
     render() {
         const info = {
-            action: this.props.error.level || '错误',
-            open: !!this.props.error.message,
-            message: this.props.error.message
+            action: this.props.Info.level || '错误',
+            open: !!this.props.Info.message,
+            message: this.props.Info.message
         }
         return (
             <Snackbar {...info} />
@@ -19,7 +19,7 @@ class Info extends Component {
 
 
 Info.defaultProps = {
-    error: {
+    Info: {
         level: '错误',
         message: '',
     }
@@ -29,7 +29,7 @@ Info.defaultProps = {
 
 export default createContainer(({ params }) => {
     return {
-        error: Session.get('error')
+        Info: Session.get('Info')
     };
 }, Info);
 

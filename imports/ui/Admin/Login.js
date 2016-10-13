@@ -42,6 +42,8 @@ class Login extends Component {
     return (
       <div style={style.page}>
         <Paper style={style.paper}>
+          <br />
+          <br />
           <h1>{this.props.title}</h1>
           <br />
           <TextField floatingLabelText="用户名" type='text' ref='username' onKeyDown={this.enter.bind(this) } />
@@ -62,21 +64,21 @@ class Login extends Component {
 
 
 export default createContainer(({ params }) => {
-    return {
-        title: '众创',
-        login: function (username, password) {
-            async.waterfall([
-                callback => {
-                    var error = null;
-                    if (password == '') error = '密码不能为空！'
-                    if (username == '') error = '用户名不能为空！'
-                    callback(error ? new Error(error) : null)
-                },
-                callback => Meteor.loginWithPassword(username, password, err => callback(err)),
-                callback => Meteor.logoutOtherClients(callback)
-            ], err => err ? Session.set('error', { message: err.message, timestamp: Date() }) : browserHistory.push('admin'))
-        }
-    };
+  return {
+    title: '众创',
+    login: (username, password) => {
+      async.waterfall([
+        callback => {
+          var error = null;
+          if (password == '') error = '密码不能为空！'
+          if (username == '') error = '用户名不能为空！'
+          callback(error ? new Error(error) : null)
+        },
+        callback => Meteor.loginWithPassword(username, password, err => callback(err)),
+        callback => Meteor.logoutOtherClients(callback)
+      ], err => err ? Session.set('Info', { message: err.message, timestamp: Date() }) : browserHistory.push('admin'))
+    }
+  };
 }, Login);
 
 

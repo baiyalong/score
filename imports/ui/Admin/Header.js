@@ -29,7 +29,7 @@ class Header extends Component {
       <FlatButton
         label="取消"
         primary={true}
-        onTouchTap={this.closeDialog.bind(this) }
+        onTouchTap={() => this.closeDialog() }
         />,
       <FlatButton
         label="确定"
@@ -55,11 +55,11 @@ class Header extends Component {
           title="注销"
           actions={actions}
           open={this.state.open}
-          onRequestClose={this.closeDialog.bind(this) }
+          onRequestClose={() => this.closeDialog() }
           >
           <div style={{ textAlign: 'center' }}>确认要注销吗？</div>
         </Dialog>
-      </div>
+      </div >
     )
   }
 }
@@ -70,7 +70,7 @@ export default createContainer(({ params }) => {
     title: '众创',
     subtitle: Session.get('subtitle') || '',
     username: Meteor.user() && Meteor.user().username,
-    logout: () => Meteor.logout(err => err ? Session.set('error', { message: err.message, timestamp: Date() }) : browserHistory.push('login'))
+    logout: () => Meteor.logout(err => err ? Session.set('Info', { message: err.message, timestamp: Date() }) : browserHistory.push('login'))
   };
 }, Header);
 
