@@ -33,7 +33,7 @@ class Item extends Component {
                             {this.state.value}
                         </div>
                     </div>
-                    <LinearProgress mode="indeterminate" />
+                    <LinearProgress mode={this.props.final ? 'determinate' : 'indeterminate'} value={this.props.final} />
                     <Slider sliderStyle={{ margin: '8px 0 0 0' }} onChange={(event, value) => { this.setState({ value: Math.round(100 * value) }) } } />
                 </CardText>
                 <CardText

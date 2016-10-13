@@ -8,7 +8,7 @@ class List extends Component {
             <div>
                 {
                     this.props.works.map(e => {
-                        return <Item {...e} />
+                        return <Item {...e} key={e._id} />
                     })
                 }
             </div>
