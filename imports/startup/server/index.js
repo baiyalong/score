@@ -1,4 +1,5 @@
 
+import '../../api/scores/publications';
 import '../../api/scores/methods';
 
 import '../../api/works/publications';

@@ -44,6 +44,7 @@ class User extends Component {
                             <TableHeaderColumn>FP</TableHeaderColumn>
                             <TableHeaderColumn>角色</TableHeaderColumn>
                             <TableHeaderColumn>状态</TableHeaderColumn>
+                            <TableHeaderColumn>评分</TableHeaderColumn>
                             <TableHeaderColumn width='10%'>
                                 <IconButton tooltip='随机评委' onClick={() => this.openDialog({ action: 'randJudge', e: {} })} >
                                     <Random />
@@ -58,6 +59,7 @@ class User extends Component {
                                     <TableRowColumn style={ellipsis}>{e.fp}</TableRowColumn>
                                     <TableRowColumn>{e.roleName}</TableRowColumn>
                                     <TableRowColumn style={e.online ? { color: 'Chartreuse' } : { color: 'Gainsboro' }}>{e.onlineName}</TableRowColumn>
+                                    <TableRowColumn>{e.scores}</TableRowColumn>
                                     <TableRowColumn width='10%'>
                                         <IconButton
                                             tooltip='删除'
