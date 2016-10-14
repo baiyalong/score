@@ -12,17 +12,22 @@ class App extends Component {
   render() {
     return (
       <div style={{ height: '100%' }} >
-        <Header />
-        <List />
+        <Header user={this.props.user} />
+        <List user={this.props.user} />
       </div>
     )
   }
 }
 
 
+import Users from '../../api/users/users';
+
+
 export default createContainer(({ params }) => {
+  Meteor.subscribe('users');
   return {
-    connect: (user) => Meteor.call('user.connect', user, (err, res) => callback(err) || console.log(res))
+    connect: (user) => Meteor.call('user.connect', user, (err, res) => callback(err) || console.log(res)),
+    user: Users.findOne()
   };
 }, App);
 

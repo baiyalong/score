@@ -8,7 +8,7 @@ class List extends Component {
             <div>
                 {
                     this.props.works.map(e => {
-                        return <Item {...e} key={e._id} />
+                        return <Item user={this.props.user} work={e} key={e._id} />
                     })
                 }
             </div>
@@ -19,9 +19,10 @@ class List extends Component {
 
 import Works from '../../api/works/works';
 
-export default createContainer(({ params }) => {
+export default createContainer((props) => {
     Meteor.subscribe('works');
     return {
+        user: props.user,
         works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
     };
 }, List);
