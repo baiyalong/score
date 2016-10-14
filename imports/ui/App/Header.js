@@ -12,21 +12,26 @@ import RaisedButton from 'material-ui/RaisedButton';
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = { open: false };
-    }
-    openModal() {
-        this.setState({ open: true });
-    }
-    closeModal() {
-        this.setState({ open: false });
+        this.state = { help: false, confirm: false, abandon: null };
     }
     render() {
         const actions = [
             <RaisedButton
+                label="取消"
+                onTouchTap={() => this.setState({ confirm: false, abandon: null })}
+                style={this.state.confirm ? {} : { display: 'none' }}
+                />,
+            <RaisedButton
                 label="确定"
                 primary={true}
                 keyboardFocused={true}
-                onTouchTap={() => this.closeModal()}
+                onTouchTap={() => {
+                    if (this.state.help) this.setState({ help: false });
+                    else if (this.state.confirm) {
+                        this.props.changeRole(this.state.abandon)
+                        this.setState({ confirm: false, abandon: null })
+                    }
+                } }
                 />,
         ];
         return (
@@ -34,25 +39,28 @@ class Header extends Component {
                 <ToolbarTitle text='众创' style={{ color: 'white' }} />
                 <ToolbarGroup>
                     <DropDownMenu value={this.props.role}
-                        onChange={(event, index, value) => this.props.changeRole(value)}
+                        onChange={(event, index, value) => (this.props.role == 'judge' && value != 'judge') ? this.setState({ confirm: true, abandon: value }) : this.props.changeRole(value)}
                         labelStyle={{ color: 'white' }}
                         style={{ margin: 0 }}
                         >
-                        <MenuItem value={'judge'} primaryText="评委" disabled={this.props.role != 'judge'} />
+                        <MenuItem value={'judge'} primaryText="评委"
+                            disabled={this.props.role != 'judge'}
+                            style={this.props.role != 'judge' ? { display: 'none' } : {}}
+                            />
                         <MenuItem value={'audience'} primaryText="观众" />
                         <MenuItem value={'player'} primaryText="参赛者" />
-
                     </DropDownMenu>
                     <Help
                         style={{ margin: '16px -8px 0 0' }}
                         color={'white'}
-                        onTouchTap={() => this.openModal()}
+                        onTouchTap={() => this.setState({ help: true })}
                         />
                     <Dialog
                         title="帮助"
+                        modal={true}
                         actions={actions}
-                        open={this.state.open}
-                        onRequestClose={() => this.closeModal()}
+                        open={this.state.help}
+                        onRequestClose={() => this.setState({ help: false })}
                         contentStyle={{ width: '100%', maxWidth: 'none' }}
                         >
                         评分规则：<br />
@@ -63,6 +71,14 @@ class Header extends Component {
                         管理员有权主动设置非活跃状态的评委弃权。<br />
                         系统始终保留评委的评分，断线后自动重连。<br />
                     </Dialog>
+                    <Dialog
+                        title="确认要弃权吗？"
+                        modal={true}
+                        actions={actions}
+                        open={this.state.confirm}
+                        onRequestClose={() => this.setState({ confirm: false })}
+                        contentStyle={{ width: '100%', maxWidth: 'none' }}
+                        />
                 </ToolbarGroup>
             </Toolbar>
         );

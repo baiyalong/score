@@ -3,6 +3,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import LinearProgress from 'material-ui/LinearProgress';
 import Slider from 'material-ui/Slider';
+import IconButton from 'material-ui/IconButton/IconButton';
+import Plus from 'material-ui/svg-icons/content/add-circle';
+import Minus from 'material-ui/svg-icons/content/remove-circle';
 
 
 class Item extends Component {
@@ -41,6 +44,21 @@ class Item extends Component {
                         value={+(this.props.score / 100).toFixed(2)}
                         onChange={(event, value) => this.props.setScore(Math.round(100 * value))}
                         style={this.props.role == 'judge' ? {} : { display: 'none' }} />
+                    <div style={this.props.role == 'judge' && this.props.score ? { marginTop: '30px' } : { display: 'none' }}>
+                        <IconButton
+                            tooltip='减分'
+                            tooltipPosition='top-center'
+                            onClick={() => this.props.setScore(this.props.score - 1)}>
+                            <Minus />
+                        </IconButton>
+                        <IconButton
+                            tooltip='加分'
+                            tooltipPosition='top-center'
+                            onClick={() => this.props.setScore(this.props.score + 1)}
+                            style={{ float: 'right' }}>
+                            <Plus />
+                        </IconButton>
+                    </div>
                 </CardText>
                 <CardText
                     expandable={true}
@@ -69,7 +87,11 @@ export default createContainer((props) => {
         role: props.user && props.user.role,
         work: props.work,
         score: props.score && props.score.score,
-        setScore: (score) => Meteor.call('score.set', { user: props.user._id, work: props.work._id, score }),
+        setScore: (score) => {
+            score = Math.max(score, 0);
+            score = Math.min(score, 100);
+            Meteor.call('score.set', { user: props.user._id, work: props.work._id, score })
+        }
     };
 }, Item);
 
