@@ -4,22 +4,17 @@ import Users from './users';
 
 Meteor.methods({
     'user.connect'(user) {
-        var u = Users.findOne({ fp: user.fp })
-        if (u) {
-            Users.update({ _id: u._id }, { $set: Object.assign(u, { conn: this.connection.id, online: true, role: u.role || 'audience' }) })
-            if (u.scores) u.scores = Meteor.call('score.get', u.scores)
-        } else {
-            u = { fp: user.fp, conn: this.connection.id, online: true, role: 'audience' }
-            Object.assign(u, { _id: Users.insert(u) })
-        }
-        return u;
+        Users.update({ fp: user.fp }, {
+            $set: { conn: this.connection.id, online: true },
+            $setOnInsert: { fp: user.fp, role: 'audience' }
+        }, { upsert: true })
     },
     'user.disconnect'(user) {
         Users.update({ conn: user.conn }, { $set: { conn: null, online: false } })
     },
     'user.resetJudge'() {
         Meteor.call('score.delAll')
-        Users.update({ role: 'judge' }, { $set: { role: 'audience', scores: null } })
+        Users.update({ role: 'judge' }, { $set: { role: 'audience' } })
     },
     'user.randJudge'(count) {
         var judges = Users.find({ online: true, role: 'audience' }).fetch().sort(() => Math.random() > .5).slice(0, Math.max(0, count) || 0)
@@ -31,12 +26,6 @@ Meteor.methods({
         if (u.role == user.role) return new Meteor.Error('role equal, no change !')
         Users.update({ _id: user._id }, { $set: { role: user.role, scores: null } })
         if (u.role == 'judge') Meteor.call('score.del', { user: u._id }) && Meteor.call('user.randJudge', 1)
-    },
-    'user.score'(score) {
-        var id = Meteor.call('score.set', score)
-        //-------------
-        console.log('user.score id ', id)
-        Users.update({ _id: score.user }, { $addToSet: { scores: id } })
     },
     'user.remove'(user) {
         Users.remove({ _id: user._id })

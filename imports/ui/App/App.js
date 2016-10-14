@@ -26,7 +26,7 @@ import Users from '../../api/users/users';
 export default createContainer(({ params }) => {
   Meteor.subscribe('users');
   return {
-    connect: (user) => Meteor.call('user.connect', user, (err, res) => callback(err) || console.log(res)),
+    connect: (user) => Meteor.call('user.connect', user, callback),
     user: Users.findOne()
   };
 }, App);

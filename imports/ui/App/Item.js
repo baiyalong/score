@@ -10,6 +10,11 @@ class Item extends Component {
         super()
         this.state = { value: 0 }
     }
+    changeValue(event, value) {
+        const score = Math.round(100 * value)
+        this.setState({ value: score })
+        this.props.score(score)
+    }
     render() {
         return (
             <Card>
@@ -39,7 +44,7 @@ class Item extends Component {
                         value={this.props.final} />
                     <Slider
                         sliderStyle={{ margin: '8px 0 0 0' }}
-                        onChange={(event, value) => { this.setState({ value: Math.round(100 * value) }) } }
+                        onChange={(event, value) => this.changeValue(event, value)}
                         style={this.props.role == 'judge' ? {} : { display: 'none' }} />
                 </CardText>
                 <CardText
@@ -58,6 +63,10 @@ export default createContainer((props) => {
     return {
         user: props.user,
         role: props.user && props.user.role,
-        work: props.work
+        work: props.work,
+        score: (score) => Meteor.call('score.set', { user: props.user._id, work: props.work._id, score }, callback),
     };
 }, Item);
+
+
+const callback = (err, res) => Session.set('Info', { level: err ? '错误' : '信息', message: err ? err.message : '操作成功', timestamp: Date() });

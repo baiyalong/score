@@ -97,6 +97,7 @@ class User extends Component {
 }
 
 
+import async from 'async';
 import Users from '../../api/users/users';
 
 export default createContainer(({ params }) => {
@@ -112,7 +113,12 @@ export default createContainer(({ params }) => {
     }
     return {
         users: Users.find({}, { sort: { online: -1, role: 1 } }).fetch().map(e => Object.assign(e, { roleName: roleNames[e.role], onlineName: onlineNames[e.online] })),
-        randJudge: (count) => Meteor.call('user.randJudge', count, callback),
+        randJudge: (count) => {
+            async.series([
+                callback => Meteor.call('user.resetJudge', callback),
+                callback => Meteor.call('user.randJudge', count, callback)
+            ], callback)
+        },
         remove: (user) => Meteor.call('user.remove', user, callback),
         abandon: (user) => Meteor.call('user.changeRole', Object.assign(user, { role: 'audience' }), callback),
     };

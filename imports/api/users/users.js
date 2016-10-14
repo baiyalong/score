@@ -15,7 +15,6 @@ Users.schema = new SimpleSchema({
     conn: { type: String },
     online: { type: Boolean },
     role: { type: String, allowedValues: ['audience', 'judge', 'player', 'admin'] },
-    scores: { type: [String], optional: true }
 });
 
 // Users.attachSchema(Users.schema);
