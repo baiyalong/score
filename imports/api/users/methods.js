@@ -52,5 +52,8 @@ Meteor.methods({
     },
     'user.reset'() {
         Users.update({ online: true }, { $set: { conn: null, online: false, focus: false, wakeup: false } }, { multi: true })
+    },
+    'user.log'(msg) {
+        console.log('user.log -- ', msg)
     }
 })

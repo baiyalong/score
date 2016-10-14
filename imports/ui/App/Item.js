@@ -6,6 +6,9 @@ import Slider from 'material-ui/Slider';
 
 
 class Item extends Component {
+    br(str) {
+        return str && str.split('\n').map((e, i) => <span key={i}>{e}<br /></span>)
+    }
     render() {
         return (
             <Card>
@@ -43,7 +46,16 @@ class Item extends Component {
                     expandable={true}
                     style={{ padding: '8px 16px' }}
                     >
-                    {this.props.work.content}
+                    <div>
+                        <b>内容：</b><br />
+                        <p>{this.br(this.props.work.content)}</p>
+                        <br />
+                        <b>创新点：</b><br />
+                        <p>{this.br(this.props.work.innovation)}</p>
+                        <br />
+                        <b>预期成果：</b><br />
+                        <p>{this.br(this.props.work.result)}</p>
+                    </div>
                 </CardText>
             </Card>
         );
