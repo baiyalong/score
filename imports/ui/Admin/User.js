@@ -123,7 +123,7 @@ export default createContainer(({ params }) => {
         player: '参赛者'
     }
     return {
-        users: Users.find({}, { sort: { online: -1, role: 1 } }).fetch().map(e => Object.assign(e, { roleName: roleNames[e.role] })),
+        users: Users.find({}, { sort: { online: -1, role: -1 } }).fetch().map(e => Object.assign(e, { roleName: roleNames[e.role] })),
         randJudge: (count) => async.series([
             callback => Meteor.call('user.resetJudge', callback),
             callback => Meteor.call('user.randJudge', count, callback)

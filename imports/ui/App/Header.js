@@ -37,7 +37,7 @@ class Header extends Component {
                         onChange={(event, index, value) => this.props.changeRole(value)}
                         labelStyle={{ color: 'white' }}
                         iconStyle={{ display: 'none' }}
-                        style={{ margin: 0 }}
+                        style={{ margin: 0, zIndex: 999 }}
                         >
                         <MenuItem value={'judge'} primaryText="评委" disabled={this.props.role != 'judge'} />
                         <MenuItem value={'audience'} primaryText="观众" />

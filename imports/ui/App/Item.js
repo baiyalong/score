@@ -57,9 +57,9 @@ export default createContainer((props) => {
         role: props.user && props.user.role,
         work: props.work,
         score: props.score && props.score.score,
-        setScore: (score) => Meteor.call('score.set', { user: props.user._id, work: props.work._id, score }, callback),
+        setScore: (score) => Meteor.call('score.set', { user: props.user._id, work: props.work._id, score }),
     };
 }, Item);
 
 
-const callback = (err, res) => Session.set('Info', { level: err ? '错误' : '信息', message: err ? err.message : '操作成功', timestamp: Date() });
+// const callback = (err, res) => Session.set('Info', { level: err ? '错误' : '信息', message: err ? err.message : '操作成功', timestamp: Date() });
