@@ -43,8 +43,9 @@ class User extends Component {
                         <TableRow>
                             <TableHeaderColumn>FP</TableHeaderColumn>
                             <TableHeaderColumn>角色</TableHeaderColumn>
-                            <TableHeaderColumn>状态</TableHeaderColumn>
-                            <TableHeaderColumn>评分</TableHeaderColumn>
+                            <TableHeaderColumn>在线/离线</TableHeaderColumn>
+                            <TableHeaderColumn>聚焦/离开</TableHeaderColumn>
+                            <TableHeaderColumn>唤醒/空闲</TableHeaderColumn>
                             <TableHeaderColumn width='10%'>
                                 <IconButton tooltip='随机评委' onClick={() => this.openDialog({ action: 'randJudge', e: {} })} >
                                     <Random />
@@ -58,8 +59,9 @@ class User extends Component {
                                 return <TableRow key={e._id}>
                                     <TableRowColumn style={ellipsis}>{e.fp}</TableRowColumn>
                                     <TableRowColumn>{e.roleName}</TableRowColumn>
-                                    <TableRowColumn style={e.online ? { color: 'Chartreuse' } : { color: 'Gainsboro' }}>{e.onlineName}</TableRowColumn>
-                                    <TableRowColumn>{e.scores}</TableRowColumn>
+                                    <TableRowColumn style={e.online ? { color: 'Chartreuse' } : { color: 'Gainsboro' }}>{e.online ? '在线' : '离线'}</TableRowColumn>
+                                    <TableRowColumn style={e.focus ? { color: 'Chartreuse' } : { color: 'Gainsboro' }}>{e.focus ? '聚焦' : '离开'}</TableRowColumn>
+                                    <TableRowColumn style={e.wakeup ? { color: 'Chartreuse' } : { color: 'Gainsboro' }}>{e.wakeup ? '唤醒' : '空闲'}</TableRowColumn>
                                     <TableRowColumn width='10%'>
                                         <IconButton
                                             tooltip='删除'
@@ -109,12 +111,8 @@ export default createContainer(({ params }) => {
         audience: '观众',
         player: '参赛者'
     }
-    const onlineNames = {
-        true: '在线',
-        false: '离线'
-    }
     return {
-        users: Users.find({}, { sort: { online: -1, role: 1 } }).fetch().map(e => Object.assign(e, { roleName: roleNames[e.role], onlineName: onlineNames[e.online] })),
+        users: Users.find({}, { sort: { online: -1, role: 1 } }).fetch().map(e => Object.assign(e, { roleName: roleNames[e.role] })),
         randJudge: (count) => {
             async.series([
                 callback => Meteor.call('user.resetJudge', callback),

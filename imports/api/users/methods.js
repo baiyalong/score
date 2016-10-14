@@ -10,7 +10,7 @@ Meteor.methods({
         }, { upsert: true })
     },
     'user.disconnect'(user) {
-        Users.update({ conn: user.conn }, { $set: { conn: null, online: false } })
+        Users.update({ conn: user.conn }, { $set: { conn: null, online: false, focus: false, wakeup: false } })
     },
     'user.resetJudge'() {
         Meteor.call('score.delAll')
@@ -31,13 +31,16 @@ Meteor.methods({
         Users.remove({ _id: user._id })
         if (user.role == 'judge') Meteor.call('score.del', { user: user._id }) && Meteor.call('user.randJudge', 1)
     },
-    'user.status'(status) {
-        var update = null;
-        if (['focus', 'blur'].includes(status))
-            update = { focus: status }
-        if (['wakeup', 'idle'].includes(status))
-            update = { idle: status }
-        if (update)
-            Users.update({ conn: this.connection.id }, { $set: update })
-    }
+    'user.focus'() {
+        Users.update({ conn: this.connection.id }, { $set: { focus: true } })
+    },
+    'user.blur'() {
+        Users.update({ conn: this.connection.id }, { $set: { focus: false } })
+    },
+    'user.wakeup'() {
+        Users.update({ conn: this.connection.id }, { $set: { wakeup: true } })
+    },
+    'user.idle'() {
+        Users.update({ conn: this.connection.id }, { $set: { wakeup: false } })
+    },
 })
