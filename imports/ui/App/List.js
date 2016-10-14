@@ -32,6 +32,6 @@ export default createContainer((props) => {
     return {
         user,
         scores: Scores.find().fetch(),
-        works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
+        works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: (e.scores && e.scores.length ? JSON.stringify(e.scores) : '') + (!e.final || e.final == 0 ? '' : e.final) })),
     };
 }, List);

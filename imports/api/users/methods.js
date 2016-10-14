@@ -4,20 +4,21 @@ import Users from './users';
 
 Meteor.methods({
     'user.connect'(user) {
-        Users.update({ fp: user.fp }, {
-            $set: { conn: this.connection.id, online: true },
-            $setOnInsert: { fp: user.fp, role: 'audience' }
-        }, { upsert: true })
+        this.userId ? null :
+            Users.update(user, {
+                $set: { conn: this.connection.id, online: true, focus: true, wakeup: true },
+                $setOnInsert: { fp: user.fp, role: 'audience' }
+            }, { upsert: true })
     },
     'user.disconnect'(user) {
-        Users.update({ conn: user.conn }, { $set: { conn: null, online: false, focus: false, wakeup: false } })
+        Users.update(user, { $set: { conn: null, online: false, focus: false, wakeup: false } })
     },
     'user.resetJudge'() {
         Meteor.call('score.delAll')
         Users.update({ role: 'judge' }, { $set: { role: 'audience' } })
     },
     'user.randJudge'(count) {
-        var judges = Users.find({ online: true, role: 'audience' }).fetch().sort(() => Math.random() > .5).slice(0, Math.max(0, count) || 0)
+        var judges = Users.find({ online: true, focus: true, role: 'audience' }).fetch().sort(() => Math.random() > .5).slice(0, Math.max(0, count) || 0)
         Users.update({ _id: { $in: judges.map(e => e._id) } }, { $set: { role: 'judge' } })
     },
     'user.changeRole'(user) {
@@ -31,16 +32,16 @@ Meteor.methods({
         Users.remove({ _id: user._id })
         if (user.role == 'judge') Meteor.call('score.del', { user: user._id }) && Meteor.call('user.randJudge', 1)
     },
-    'user.focus'() {
-        Users.update({ conn: this.connection.id }, { $set: { focus: true } })
+    'user.focus'(user) {
+        Users.update(user, { $set: { focus: true } })
     },
-    'user.blur'() {
-        Users.update({ conn: this.connection.id }, { $set: { focus: false } })
+    'user.blur'(user) {
+        Users.update(user, { $set: { focus: false } })
     },
-    'user.wakeup'() {
-        Users.update({ conn: this.connection.id }, { $set: { wakeup: true } })
+    'user.wakeup'(user) {
+        Users.update(user, { $set: { wakeup: true } })
     },
-    'user.idle'() {
-        Users.update({ conn: this.connection.id }, { $set: { wakeup: false } })
+    'user.idle'(user) {
+        Users.update(user, { $set: { wakeup: false } })
     },
 })

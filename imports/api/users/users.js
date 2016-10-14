@@ -17,7 +17,6 @@ Users.schema = new SimpleSchema({
     focus: { type: Boolean },
     wakeup: { type: Boolean },
     role: { type: String, allowedValues: ['audience', 'judge', 'player', 'admin'] },
-    scores: { type: [String], optional: true }
 });
 
 // Users.attachSchema(Users.schema);

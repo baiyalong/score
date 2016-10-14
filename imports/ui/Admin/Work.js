@@ -116,7 +116,7 @@ import Works from '../../api/works/works';
 export default createContainer(({ params }) => {
     Meteor.subscribe('works');
     return {
-        works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
+        works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: (!e.final || e.final == 0 ? '' : e.final) + (e.scores && e.scores.length ? JSON.stringify(e.scores) : '') })),
         insert: (w) => Meteor.call('work.insert', w, callback),
         remove: (w) => Meteor.call('work.remove', w, callback),
         update: (w) => Meteor.call('work.update', w, callback),

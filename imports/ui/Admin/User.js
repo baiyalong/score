@@ -41,7 +41,7 @@ class User extends Component {
                 <Table>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
-                            <TableHeaderColumn>FP</TableHeaderColumn>
+                            <TableHeaderColumn>用户</TableHeaderColumn>
                             <TableHeaderColumn>角色</TableHeaderColumn>
                             <TableHeaderColumn>在线/离线</TableHeaderColumn>
                             <TableHeaderColumn>聚焦/离开</TableHeaderColumn>
@@ -113,12 +113,10 @@ export default createContainer(({ params }) => {
     }
     return {
         users: Users.find({}, { sort: { online: -1, role: 1 } }).fetch().map(e => Object.assign(e, { roleName: roleNames[e.role] })),
-        randJudge: (count) => {
-            async.series([
-                callback => Meteor.call('user.resetJudge', callback),
-                callback => Meteor.call('user.randJudge', count, callback)
-            ], callback)
-        },
+        randJudge: (count) => async.series([
+            callback => Meteor.call('user.resetJudge', callback),
+            callback => Meteor.call('user.randJudge', count, callback)
+        ], callback),
         remove: (user) => Meteor.call('user.remove', user, callback),
         abandon: (user) => Meteor.call('user.changeRole', Object.assign(user, { role: 'audience' }), callback),
     };
