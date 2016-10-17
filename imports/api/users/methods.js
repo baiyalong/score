@@ -30,5 +30,14 @@ Meteor.methods({
     'user.remove'(user) {
         Users.remove({ _id: user._id })
         if (user.role == 'judge') Meteor.call('score.del', { user: user._id }) && Meteor.call('user.randJudge', 1)
+    },
+    'user.status'(status) {
+        var update = null;
+        if (['focus', 'blur'].includes(status))
+            update = { focus: status }
+        if (['wakeup', 'idle'].includes(status))
+            update = { idle: status }
+        if (update)
+            Users.update({ conn: this.connection.id }, { $set: update })
     }
 })
