@@ -8,7 +8,11 @@ class List extends Component {
             <div>
                 {
                     this.props.works.map(e => {
-                        return <Item user={this.props.user} work={e} key={e._id} />
+                        return <Item
+                            user={this.props.user}
+                            work={e}
+                            score={this.props.scores.find(s => s.work == e._id)}
+                            key={e._id} />
                     })
                 }
             </div>
@@ -18,11 +22,16 @@ class List extends Component {
 
 
 import Works from '../../api/works/works';
+import Scores from '../../api/scores/scores';
 
 export default createContainer((props) => {
+    var user = props.user;
     Meteor.subscribe('works');
+    if (user && user.role == 'judge')
+        Meteor.subscribe('scores', { user: user._id });
     return {
-        user: props.user,
+        user,
+        scores: Scores.find().fetch(),
         works: Works.find({}, { sort: { sn: 1 } }).fetch().map(e => Object.assign(e, { score: e.final || '' + e.scores ? JSON.stringify(e.scores) : '' })),
     };
 }, List);

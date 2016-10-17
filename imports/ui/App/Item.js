@@ -6,15 +6,6 @@ import Slider from 'material-ui/Slider';
 
 
 class Item extends Component {
-    constructor() {
-        super()
-        this.state = { value: 0 }
-    }
-    changeValue(event, value) {
-        const score = Math.round(100 * value)
-        this.setState({ value: score })
-        this.props.score(score)
-    }
     render() {
         return (
             <Card>
@@ -30,21 +21,22 @@ class Item extends Component {
                     >
                     <div style={{ position: 'relative' }}>
                         <div style={{ color: 'red', position: 'absolute', top: '-16px', right: 0 }}>
-                            {this.props.rank}
+                            {this.props.work.rank}
                         </div>
                         <div style={{ color: 'red', position: 'absolute', top: '4px', right: 0 }}>
-                            {this.props.score}
+                            {this.props.work.score}
                         </div>
                         <div style={this.props.role == 'judge' ? { color: 'red', position: 'absolute', top: '22px', right: 0 } : { display: 'none' }}>
-                            {this.state.value}
+                            {this.props.score}
                         </div>
                     </div>
                     <LinearProgress
-                        mode={this.props.final ? 'determinate' : 'indeterminate'}
-                        value={this.props.final} />
+                        mode={this.props.work.final && this.props.work.final != 0 ? 'determinate' : 'indeterminate'}
+                        value={+this.props.work.final} />
                     <Slider
                         sliderStyle={{ margin: '8px 0 0 0' }}
-                        onChange={(event, value) => this.changeValue(event, value)}
+                        value={+(this.props.score / 100).toFixed(2)}
+                        onChange={(event, value) => this.props.setScore(Math.round(100 * value))}
                         style={this.props.role == 'judge' ? {} : { display: 'none' }} />
                 </CardText>
                 <CardText
@@ -64,7 +56,8 @@ export default createContainer((props) => {
         user: props.user,
         role: props.user && props.user.role,
         work: props.work,
-        score: (score) => Meteor.call('score.set', { user: props.user._id, work: props.work._id, score }, callback),
+        score: props.score && props.score.score,
+        setScore: (score) => Meteor.call('score.set', { user: props.user._id, work: props.work._id, score }, callback),
     };
 }, Item);
 

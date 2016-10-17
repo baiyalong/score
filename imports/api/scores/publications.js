@@ -1,7 +1,7 @@
 
-// import Scores from './scores';
+import Scores from './scores';
 
 
-// Meteor.publish('scores', function (score) {
-//     return Scores.find(score)
-// })
+Meteor.publish('scores', function (score) {
+    return Scores.find(score)
+})
