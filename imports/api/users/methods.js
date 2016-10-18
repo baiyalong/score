@@ -33,16 +33,16 @@ Meteor.methods({
         if (user.role == 'judge') Meteor.call('score.del', { user: user._id }) && Meteor.call('user.randJudge', 1)
     },
     'user.focus'(user) {
-        Users.update(user, { $set: { focus: true } })
+        Users.update(user, { $set: { conn: this.connection.id, online: true, focus: true } })
     },
     'user.blur'(user) {
-        Users.update(user, { $set: { focus: false } })
+        Users.update(user, { $set: { conn: this.connection.id, online: true, focus: false } })
     },
     'user.wakeup'(user) {
-        Users.update(user, { $set: { wakeup: true } })
+        Users.update(user, { $set: { conn: this.connection.id, online: true, wakeup: true } })
     },
     'user.idle'(user) {
-        Users.update(user, { $set: { wakeup: false } })
+        Users.update(user, { $set: { conn: this.connection.id, online: true, wakeup: false } })
     },
     'user.reset'() {
         Users.update({ online: true }, { $set: { conn: null, online: false, focus: false, wakeup: false } }, { multi: true })
