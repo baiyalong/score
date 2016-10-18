@@ -19,11 +19,19 @@ const ellipsis = {
 }
 
 
+function getTableHeight() {
+    return document.body.clientHeight - 56 - 56 - 49 - 1
+}
+
 
 class Work extends Component {
     constructor() {
         super()
-        this.state = { open: false, action: null, e: {} };
+        this.state = { open: false, action: null, e: {}, height: getTableHeight() };
+        window.onresize = this.resize.bind(this);
+    }
+    resize() {
+        this.setState({ height: getTableHeight() })
     }
     openDialog(state) {
         this.setState(Object.assign({ open: true }, state))
@@ -46,7 +54,7 @@ class Work extends Component {
     render() {
         return (
             <div>
-                <Table>
+                <Table height={this.state.height + 'px'}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false} >
                         <TableRow>
                             <TableHeaderColumn>主题</TableHeaderColumn>
@@ -93,10 +101,12 @@ class Work extends Component {
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <TableRowColumn >
-                                合计：{this.props.works.length}，
-                                已评分：{this.props.works.filter(e => e.scores).length}，
-                                未评分：{this.props.works.filter(e => !e.scores).length}
+                            <TableRowColumn>
+                                <div style={{ position: 'relative', left: 0, top: '-15px' }}>
+                                    合计：{this.props.works.length}，
+                                    已评分：{this.props.works.filter(e => e.scores).length}，
+                                    未评分：{this.props.works.filter(e => !e.scores).length}
+                                </div>
                             </TableRowColumn>
                         </TableRow>
                     </TableFooter>

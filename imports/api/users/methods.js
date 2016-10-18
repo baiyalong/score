@@ -15,7 +15,7 @@ Meteor.methods({
     },
     'user.resetJudge'() {
         Meteor.call('score.delAll')
-        Users.update({ role: 'judge' }, { $set: { role: 'audience' } })
+        Users.update({ role: 'judge' }, { $set: { role: 'audience' } }, { multi: true })
     },
     'user.randJudge'(count) {
         var judges = Users.find({ online: true, focus: true, role: 'audience' }).fetch().sort(() => Math.random() > .5).slice(0, Math.max(0, count) || 0)
@@ -44,4 +44,7 @@ Meteor.methods({
     'user.idle'(user) {
         Users.update(user, { $set: { wakeup: false } })
     },
+    'user.reset'() {
+        Users.update({ online: true }, { $set: { conn: null, online: false, focus: false, wakeup: false } }, { multi: true })
+    }
 })

@@ -14,10 +14,19 @@ const ellipsis = {
 }
 
 
+function getTableHeight() {
+    return document.body.clientHeight - 56 - 56 - 49 - 1
+}
+
+
 class User extends Component {
     constructor() {
         super()
-        this.state = { open: false, action: null, e: {} };
+        this.state = { open: false, action: null, e: {}, height: getTableHeight() };
+        window.onresize = this.resize.bind(this);
+    }
+    resize() {
+        this.setState({ height: getTableHeight() })
     }
     openDialog(state) {
         this.setState(Object.assign({ open: true }, state))
@@ -38,7 +47,7 @@ class User extends Component {
     render() {
         return (
             <div>
-                <Table>
+                <Table height={this.state.height + 'px'}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
                             <TableHeaderColumn>用户</TableHeaderColumn>
@@ -66,7 +75,7 @@ class User extends Component {
                                         <IconButton
                                             tooltip='删除'
                                             onClick={() => this.openDialog({ action: 'remove', e })}
-                                            style={e.online ? { display: 'none' } : {}}>
+                                            style={e.online || e.role == 'judge' ? { display: 'none' } : {}}>
                                             <Remove />
                                         </IconButton>
                                         <IconButton
@@ -83,12 +92,14 @@ class User extends Component {
                     <TableFooter>
                         <TableRow>
                             <TableRowColumn>
-                                合计：{this.props.users.length}，
-                                在线：{this.props.users.filter(e => e.online).length}，
-                                在线评委：{this.props.users.filter(e => e.online&&e.role=='judge').length}，
-                                在线观众：{this.props.users.filter(e => e.online&&e.role=='audience').length}，
-                                在线参赛者：{this.props.users.filter(e => e.online&&e.role=='player').length}，
-                                离线：{this.props.users.filter(e => !e.online).length}
+                                <div style={{ position: 'relative', left: 0, top: '-15px' }}>
+                                    合计：{this.props.users.length}，
+                                    在线：{this.props.users.filter(e => e.online).length}，
+                                    在线评委：{this.props.users.filter(e => e.online&&e.role=='judge').length}，
+                                    在线观众：{this.props.users.filter(e => e.online&&e.role=='audience').length}，
+                                    在线参赛者：{this.props.users.filter(e => e.online&&e.role=='player').length}，
+                                    离线：{this.props.users.filter(e => !e.online).length}
+                                </div>
                             </TableRowColumn>
                         </TableRow>
                     </TableFooter>
