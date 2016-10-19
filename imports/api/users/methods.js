@@ -4,6 +4,7 @@ import Users from './users';
 
 Meteor.methods({
     'user.connect'(user) {
+        // console.log(JSON.stringify(this.connection.httpHeaders))
         this.userId ? null :
             Users.update(user, {
                 $set: { conn: this.connection.id, online: true, focus: true, wakeup: true },
@@ -51,7 +52,7 @@ Meteor.methods({
         Users.update(user, { $set: { conn: this.connection.id, online: true, wakeup: false } })
     },
     'user.reset'() {
-        Users.update({ online: true }, { $set: { conn: null, online: false, focus: false, wakeup: false } }, { multi: true })
+        Users.update({}, { $set: { conn: null, online: false, focus: false, wakeup: false } }, { multi: true })
     },
     'user.log'(msg) {
         console.log('user.log -- ', msg)

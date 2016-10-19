@@ -8,10 +8,6 @@ import List from './List';
 
 
 class App extends Component {
-  constructor() {
-    super()
-    
-  }
   componentDidMount() {
     new Fingerprint2().get(fp => this.props.connect({ fp }))
   }
@@ -52,3 +48,6 @@ function status(user) {
   ifvisible.wakeup(() => Meteor.call('user.wakeup', user));
   ifvisible.idle(() => Meteor.call('user.idle', user));
 }
+
+
+
