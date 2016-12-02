@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import { cyan500 } from 'material-ui/styles/colors';
+import { cyan500, pink500 } from 'material-ui/styles/colors';
 import Help from 'material-ui/svg-icons/action/help-outline';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -35,7 +35,7 @@ class Header extends Component {
                 />,
         ];
         return (
-            <Toolbar style={{ backgroundColor: cyan500 }} >
+            <Toolbar style={this.props.role == 'judge' ? { backgroundColor: pink500 } : { backgroundColor: cyan500 }} >
                 <ToolbarTitle text='众创' style={{ color: 'white' }} />
                 <ToolbarGroup>
                     <DropDownMenu value={this.props.role}
