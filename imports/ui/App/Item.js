@@ -6,6 +6,7 @@ import Slider from 'material-ui/Slider';
 import IconButton from 'material-ui/IconButton/IconButton';
 import Plus from 'material-ui/svg-icons/content/add-circle';
 import Minus from 'material-ui/svg-icons/content/remove-circle';
+import { cyan500, pink500 } from 'material-ui/styles/colors';
 
 
 class Item extends Component {
@@ -38,27 +39,15 @@ class Item extends Component {
                     </div>
                     <LinearProgress
                         mode={this.props.work.final && this.props.work.final != 0 ? 'determinate' : 'indeterminate'}
-                        value={+this.props.work.final} />
+                        value={+this.props.work.final}
+                        color={this.props.role == 'judge' ? pink500 : cyan500}
+                        />
                     <Slider
                         sliderStyle={{ margin: '8px 0 0 0' }}
                         value={+(this.props.score / 100).toFixed(2)}
                         onChange={(event, value) => this.props.setScore(Math.round(100 * value))}
-                        style={this.props.role == 'judge' ? {} : { display: 'none' }} />
-                    <div style={this.props.role == 'judge' && this.props.score ? { marginTop: '30px' } : { display: 'none' }}>
-                        <IconButton
-                            tooltip='减分'
-                            tooltipPosition='top-center'
-                            onClick={() => this.props.setScore(this.props.score - 1)}>
-                            <Minus />
-                        </IconButton>
-                        <IconButton
-                            tooltip='加分'
-                            tooltipPosition='top-center'
-                            onClick={() => this.props.setScore(this.props.score + 1)}
-                            style={{ float: 'right' }}>
-                            <Plus />
-                        </IconButton>
-                    </div>
+                        style={this.props.role == 'judge' ? {} : { display: 'none' }}
+                        />
                 </CardText>
                 <CardText
                     expandable={true}
