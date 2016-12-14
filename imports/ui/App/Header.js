@@ -4,6 +4,7 @@ import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { cyan500, pink500 } from 'material-ui/styles/colors';
+import IconButton from 'material-ui/IconButton';
 import Help from 'material-ui/svg-icons/action/help-outline';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -41,7 +42,6 @@ class Header extends Component {
                     <DropDownMenu value={this.props.role}
                         onChange={(event, index, value) => (this.props.role == 'judge' && value != 'judge') ? this.setState({ confirm: true, abandon: value }) : this.props.changeRole(value)}
                         labelStyle={{ color: 'white' }}
-                        style={{ margin: 0 }}
                         >
                         <MenuItem value={'judge'} primaryText="评委"
                             disabled={this.props.role != 'judge'}
@@ -50,11 +50,9 @@ class Header extends Component {
                         <MenuItem value={'audience'} primaryText="观众" />
                         <MenuItem value={'player'} primaryText="参赛者" />
                     </DropDownMenu>
-                    <Help
-                        style={{ margin: '16px -8px 0 0' }}
-                        color={'white'}
-                        onTouchTap={() => this.setState({ help: true })}
-                        />
+                    <IconButton onTouchTap={() => this.setState({ help: true })}>
+                        <Help color={'white'} />
+                    </IconButton>
                     <Dialog
                         title="帮助"
                         modal={true}
