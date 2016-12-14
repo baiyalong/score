@@ -3,10 +3,9 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import LinearProgress from 'material-ui/LinearProgress';
 import Slider from 'material-ui/Slider';
-import IconButton from 'material-ui/IconButton/IconButton';
-import Plus from 'material-ui/svg-icons/content/add-circle';
-import Minus from 'material-ui/svg-icons/content/remove-circle';
 import { cyan500, pink500 } from 'material-ui/styles/colors';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 
 class Item extends Component {
@@ -14,6 +13,10 @@ class Item extends Component {
         return str && str.split('\n').map((e, i) => <span key={i}>{e}<br /></span>)
     }
     render() {
+        const items = [];
+        for (let i = 100; i > 0; i--) {
+            items.push(<MenuItem value={i} key={i} primaryText={i} />);
+        }
         return (
             <Card>
                 <CardTitle
@@ -47,7 +50,17 @@ class Item extends Component {
                         value={+(this.props.score / 100).toFixed(2)}
                         onChange={(event, value) => this.props.setScore(Math.round(100 * value))}
                         style={this.props.role == 'judge' ? {} : { display: 'none' }}
+                        sliderStyle={{color:pink500}}
                         />
+                    <SelectField
+                        floatingLabelText="评委打分"
+                        value={this.props.score}
+                        onChange={(event, index, value) => { this.props.setScore(value) } }
+                        autoWidth={true}
+                        style={this.props.role == 'judge' ? {} : { display: 'none' }}
+                        >
+                        {items}
+                    </SelectField>
                 </CardText>
                 <CardText
                     expandable={true}
