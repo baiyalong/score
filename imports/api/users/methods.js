@@ -19,7 +19,7 @@ Meteor.methods({
         Users.update({ role: 'judge' }, { $set: { role: 'audience' } }, { multi: true })
     },
     'user.randJudge'(count) {
-        var judges = Users.find({ online: true, focus: true, role: 'audience' }).fetch().sort(() => Math.random() > .5).slice(0, Math.max(0, count) || 0)
+        var judges = Users.find({ online: true, role: 'audience' }).fetch().sort(() => Math.random() > .5).slice(0, Math.max(0, count) || 0)
         Users.update({ _id: { $in: judges.map(e => e._id) } }, { $set: { role: 'judge' } }, { multi: true })
     },
     'user.changeRole'(user) {
